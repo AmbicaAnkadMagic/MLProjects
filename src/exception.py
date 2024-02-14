@@ -1,5 +1,5 @@
 import sys
-import logging
+from src.logger import logging
 
 logging.basicConfig(filename='example.log', level=logging.INFO)
 
