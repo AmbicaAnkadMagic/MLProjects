@@ -42,13 +42,48 @@ class ModelTrainer:
                 "DecisionTreeRegressor":DecisionTreeRegressor(),
                 "GradientBoosting":GradientBoostingRegressor(),
                 "LinearRegression":LinearRegression(),
-                "K-Neighbors Classifier":KNeighborsRegressor(),
-                "XGBClassifier":XGBRegressor(),
+                "K-Neighbors Regressor":KNeighborsRegressor(),
+                "XGBRegressor":XGBRegressor(),
                 "CatBoostingRegressor":CatBoostRegressor(verbose=False),
                 "AdaBoostRegressor": AdaBoostRegressor(),
             }
+
+            params = {
+                        "RandomForest":{
+                            'n_estimators':[8,16,32,64,128, 256]
+                        },
+                        "DecisionTreeRegressor":{
+                            'criterion':['squared_error', 'friedman_mse', 
+                                 'absoulte_error', 'poisson']
+
+                        },
+                        "GradientBoosting":{
+                            'learning_rate':[0.1,0.01,0.05, 0.001 ],
+                            'subsample':[0.6,0.7,0.75, 0.8,0.85,0.9],
+                            'n_estimators':[8,16,32,64,128, 256]
+                        },
+                        "LinearRegression":{},
+                        "K-Neighbors Regressor":{
+                            'n_neighbors':[5,7,9,11],
+                        },
+                        "XGBRegressor":{
+                            'learning_rate':[0.01,0.05,0.1],
+                            'n_estimators':[8,16,32,64,128, 256]
+                        },
+                        "CatBoostingRegressor":{
+                            'depth': [6,8,10],
+                            'learning_rate':[0.01,0.05,0.1],
+                            'iterations':[30,50,100]
+                        },
+                        "AdaBoostRegressor": {
+                            'learning_rate':[0.1,0.01, 0.5,0.001],
+                            'n_estimators':[8,16,32,64,128, 256]
+                        },
+                    }
+            
+
             #try hyperparameter tuning on your own ???
-            model_report: dict = evaluate_model(X_train=X_train, Y_train=Y_train, X_test=X_test, Y_test=Y_test,models=models)
+            model_report: dict = evaluate_model(X_train=X_train, Y_train=Y_train, X_test=X_test, Y_test=Y_test,models=models, params=params)
 
             ## to get best model from dict
             best_model_score = max(sorted(model_report.values()))
